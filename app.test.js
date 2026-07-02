@@ -1,27 +1,15 @@
 const calcul = require('./app');
 
-describe('Tests des fonctions de calcul', () => {
+describe('Tests de la fonction calcul pour le Quality Gate', () => {
 
-  // Ton test initial (Addition)
-  test('adds 1 + 2 to equal 3', () => {
-    expect(calcul(1, 2)).toBe(3); // Ou calcul.add(1, 2) selon ta syntaxe
+  // 1. Test pour passer dans le "else" (a est inférieur ou égal à 10)
+  test('devrait additionner quand a est inférieur ou égal à 10', () => {
+    expect(calcul(1, 2)).toBe(3);
   });
 
-  // Test de la Soustraction (au cas où elle est dans app.js)
-  test('subs 5 - 2 to equal 3', () => {
-    // Si ton app exporte un objet avec plusieurs fonctions, essaie : calcul.sub(5, 2)
-    // Si c'est une seule fonction qui gère plusieurs cas, adapte les arguments
-    expect(calcul(5, -2)).toBe(7); 
-  });
-
-  // Test de la Multiplication
-  test('multiplies 3 * 3 to equal 9', () => {
-    expect(calcul(3, 3)).toBe(9);
-  });
-
-  // Test de la Division et de la sécurité (ex: division par 0)
-  test('divides 6 / 2 to equal 3', () => {
-    expect(calcul(6, 2)).toBe(3);
+  // 2. Test pour passer dans le "if" (a est strictement supérieur à 10)
+  test('devrait additionner quand a est supérieur à 10', () => {
+    expect(calcul(15, 5)).toBe(20);
   });
 
 });
