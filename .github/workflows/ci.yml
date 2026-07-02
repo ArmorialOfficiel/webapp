@@ -97,20 +97,16 @@ jobs:
 
   # 5. Trivy - scan de l'image (conteneur)
   container-scan:
-    needs: build-image
+    needs: build-and-push # S'assure que l'image est bien sur GHCR avant de scanner
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: docker-image
-          path: .
+      - name: Nom de l'image en minuscules
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/webapp" >> "$GITHUB_ENV"
 
-      - name: Charger l'image
-        run: docker load -i my-image.tar
-
-      - name: Scan de l'image
+      - name: Scan de l'image Docker depuis GHCR
         uses: aquasecurity/trivy-action@v0.24.0
         with:
-          image-ref: 'my-app:${{ github.sha }}'
-          severity: 'CRITICAL'
-          exit-code: '1'
+          image-ref: ${{ env.IMAGE }}:${{ github.sha }}
+          format: 'table'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1' # Fait planter le pipeline s'il y a des failles critiques
