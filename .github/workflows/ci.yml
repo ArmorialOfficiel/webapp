@@ -69,7 +69,7 @@ jobs:
           severity: 'HIGH,CRITICAL'
           exit-code: '1'
 
-  # 4. Build de l'image Docker
+# 4. Build de l'image Docker
  build-image:
     needs: sonar-check
     runs-on: ubuntu-latest
