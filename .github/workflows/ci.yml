@@ -35,13 +35,12 @@ jobs:
   sonar-check:
     needs: unit-test
     runs-on: ubuntu-latest
-    env:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      SONAR_HOST_URL: https://sonarcloud.io
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # On recupere tout l'historique Git pour que SonarCloud 
+          # puisse identifier le proprietaire du depot
+          fetch-depth: 0 
 
       - name: Recuperer la couverture
         uses: actions/download-artifact@v4
@@ -49,6 +48,17 @@ jobs:
           name: coverage
           path: coverage/
 
+      - name: Analyse SonarQube Cloud
+        uses: SonarSource/sonarqube-scan-action@v5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          args: >
+            -Dsonar.organization=armorialofficiel
+            -Dsonar.projectKey=armorialofficiel_webapp
+            -Dsonar.sources=.
+            -Dsonar.qualitygate.wait=true
       - name: Analyse SonarQube Cloud
         uses: SonarSource/sonarqube-scan-action@v5
         with:
