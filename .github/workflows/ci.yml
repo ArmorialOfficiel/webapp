@@ -38,8 +38,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          # On recupere tout l'historique Git pour que SonarCloud 
-          # puisse identifier le proprietaire du depot
           fetch-depth: 0 
 
       - name: Recuperer la couverture
@@ -57,9 +55,7 @@ jobs:
           args: >
             -Dsonar.organization=armorialofficiel
             -Dsonar.projectKey=ArmorialOfficiel_webapp
-            -Dsonar.sources=.
             -Dsonar.qualitygate.wait=true
-
   # 3. Trivy - scan des dependances (SCA)
   dependency-scan:
     runs-on: ubuntu-latest
