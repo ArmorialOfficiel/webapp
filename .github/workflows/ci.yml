@@ -70,8 +70,8 @@ jobs:
           exit-code: '1'
 
 # 4. Build de l'image Docker
- build-image:
-    needs: sonar-check
+  build-image:
+    needs: dependency-scan  # Petit conseil : change sonar-check par dependency-scan pour que les jobs s'enchaînent proprement
     runs-on: ubuntu-latest
     permissions:
       contents: read
