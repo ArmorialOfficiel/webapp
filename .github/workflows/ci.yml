@@ -96,8 +96,8 @@ jobs:
           tags: ghcr.io/armorialofficiel/webapp:latest
 
   # 5. Trivy - scan de l'image (conteneur)
-  container-scan:
-    needs: build-and-push # S'assure que l'image est bien sur GHCR avant de scanner
+ container-scan:
+    needs: build-image  # C'est ici qu'on corrige le nom du job parent !
     runs-on: ubuntu-latest
     steps:
       - name: Nom de l'image en minuscules
@@ -109,4 +109,4 @@ jobs:
           image-ref: ${{ env.IMAGE }}:${{ github.sha }}
           format: 'table'
           severity: 'HIGH,CRITICAL'
-          exit-code: '1' # Fait planter le pipeline s'il y a des failles critiques
+          exit-code: '1'
