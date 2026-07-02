@@ -95,9 +95,9 @@ jobs:
           push: true
           tags: ghcr.io/armorialofficiel/webapp:latest
 
-  # 5. Trivy - scan de l'image (conteneur)
- container-scan:
-    needs: build-image  # C'est ici qu'on corrige le nom du job parent !
+# 5. Trivy - scan de l'image (conteneur)
+  container-scan:
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
       - name: Nom de l'image en minuscules
