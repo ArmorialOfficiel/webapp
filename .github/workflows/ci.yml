@@ -70,22 +70,30 @@ jobs:
           exit-code: '1'
 
   # 4. Build de l'image Docker
-  build-image:
-    needs: [ sonar-check, dependency-scan ]
+ build-image:
+    needs: sonar-check
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Connexion au dépôt de code
+        uses: actions/checkout@v4
 
-      - name: Build de l'image
-        run: docker build -t my-app:${{ github.sha }} .
-
-      - name: Exporter l'image
-        run: docker save my-app:${{ github.sha }} -o my-image.tar
-
-      - uses: actions/upload-artifact@v4
+      - name: Connexion à GitHub Container Registry (GHCR)
+        uses: docker/login-action@v3
         with:
-          name: docker-image
-          path: my-image.tar
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/armorialofficiel/webapp:latest
 
   # 5. Trivy - scan de l'image (conteneur)
   container-scan:
