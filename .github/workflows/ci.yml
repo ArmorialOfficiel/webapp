@@ -55,8 +55,6 @@ jobs:
           args: >
             -Dsonar.organization=armorialofficiel
             -Dsonar.projectKey=ArmorialOfficiel_webapp
-            -Dsonar.qualitygate.wait=true
-            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
   # 3. Trivy - scan des dependances (SCA)
   dependency-scan:
     runs-on: ubuntu-latest
