@@ -56,7 +56,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=armorialofficiel
-            -Dsonar.projectKey=armorialofficiel_webapp
+            -Dsonar.projectKey=ArmorialOfficiel_webapp
             -Dsonar.sources=.
             -Dsonar.qualitygate.wait=true
 
