@@ -50,6 +50,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
         with:
           # Attend le verdict de la Quality Gate par defaut "Sonar way"
           # (gratuite) et fait echouer le job si elle n'est pas respectee.
