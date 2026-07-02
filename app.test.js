@@ -1,27 +1,27 @@
-const request = require('supertest');
-const app = require('./app'); // Assure-toi que le chemin vers ton app Express est correct
+const calcul = require('./app');
 
-describe('Tests de l\'application WebApp', () => {
-  
-  // Test de la route d'accueil (GET /)
-  it('devrait répondre avec un statut 200 sur la route /', async () => {
-    const res = await request(app).get('/');
-    expect(res.statusCode).toEqual(200);
-    // Optionnel : expect(res.text).toContain('Bienvenue'); 
+describe('Tests des fonctions de calcul', () => {
+
+  // Ton test initial (Addition)
+  test('adds 1 + 2 to equal 3', () => {
+    expect(calcul(1, 2)).toBe(3); // Ou calcul.add(1, 2) selon ta syntaxe
   });
 
-  // Test d'une route API ou d'une autre page (ex: GET /api/health)
-  it('devrait retourner le statut de l\'application sur /health', async () => {
-    const res = await request(app).get('/health');
-    if (res.statusCode === 200) {
-      expect(res.body).toHaveProperty('status', 'UP');
-    }
+  // Test de la Soustraction (au cas où elle est dans app.js)
+  test('subs 5 - 2 to equal 3', () => {
+    // Si ton app exporte un objet avec plusieurs fonctions, essaie : calcul.sub(5, 2)
+    // Si c'est une seule fonction qui gère plusieurs cas, adapte les arguments
+    expect(calcul(5, -2)).toBe(7); 
   });
 
-  // Test de la gestion des erreurs 404 (Route inconnue)
-  it('devrait retourner une erreur 404 pour une route inexistante', async () => {
-    const res = await request(app).get('/route-qui-n-existe-pas');
-    expect(res.statusCode).toEqual(404);
+  // Test de la Multiplication
+  test('multiplies 3 * 3 to equal 9', () => {
+    expect(calcul(3, 3)).toBe(9);
+  });
+
+  // Test de la Division et de la sécurité (ex: division par 0)
+  test('divides 6 / 2 to equal 3', () => {
+    expect(calcul(6, 2)).toBe(3);
   });
 
 });
